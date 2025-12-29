@@ -1,7 +1,17 @@
 {
+  "name": "cynthia-generator",
+  "owner": {
+    "name": "Bacclabs",
+    "email": "contact@bacclabs.io"
+  },
+  "metadata": {
+    "description": "FHIR-compliant synthetic healthcare data generation",
+    "version": "1.0.0"
+  },
   "plugins": [
     {
       "name": "cynthia-generator",
+      "source": ".",
       "description": "Generate synthetic FHIR-compliant healthcare data for EHR testing without exposing real patient information",
       "author": {
         "name": "Bacclabs",
@@ -11,10 +21,6 @@
       "version": "0.2.0",
       "category": "healthcare",
       "tags": ["healthcare", "fhir", "synthetic-data", "ehr", "testing", "hipaa", "validation", "clinical-realism"],
-      "source": {
-        "type": "git",
-        "url": "https://github.com/BACC-Labs/cynthia-generator"
-      },
       "homepage": "https://github.com/BACC-Labs/cynthia-generator",
       "repository": "https://github.com/BACC-Labs/cynthia-generator",
       "license": "MIT"
