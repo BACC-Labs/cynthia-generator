@@ -187,7 +187,63 @@ Sample patient: John Smith (MRN: MRN789012)
   - Medications: Metformin 1000mg BID
 ```
 
-### Step 6: Offer Export
+### Step 6: Auto-Validate Generated Data (NEW in v0.2.0)
+
+Before offering export, automatically validate the generated data for quality:
+
+1. **Check validation settings** in `.claude/cynthia-generator.local.md`:
+   ```markdown
+   ## Validation Settings
+   - Auto-validate after generate: yes|no (default: yes)
+   ```
+
+2. **If auto-validate enabled (default: yes)**:
+   - Invoke the `fhir-data-validator` agent with the generated bundle
+   - Use Task tool with subagent_type='general-purpose'
+   - Pass context: "Validate this FHIR Bundle for clinical realism and referential integrity"
+
+   **Show brief validation summary**:
+
+   If **NO CRITICAL issues found**:
+   ```
+   ✓ Validation complete: No critical issues found
+     (2 minor suggestions - run /validate for details)
+   ```
+
+   If **WARNINGS found**:
+   ```
+   ✓ Validation complete: No critical issues
+     ⚠️  Found 3 warnings - run /validate to review
+   ```
+
+   If **CRITICAL issues found**:
+   ```
+   ⚠️  Validation found 3 critical issues
+      Run /validate to see details and fix before export
+
+      Issues detected:
+      - Broken reference (Patient ID mismatch)
+      - Missing required field (Condition.code)
+      - Impossible value (negative age)
+   ```
+
+3. **If auto-validate disabled**:
+   - Skip validation step
+   - Show note:
+   ```
+   ℹ️  Auto-validation skipped (disabled in settings)
+      Tip: Run /validate manually to check data quality
+   ```
+
+4. **If validation agent unavailable or errors**:
+   - Continue without validation
+   - Show note:
+   ```
+   ℹ️  Validation unavailable - proceeding without quality check
+      Tip: Run /validate manually when ready
+   ```
+
+### Step 7: Offer Export
 
 Ask user: "Would you like to export this data now?"
 
@@ -195,8 +251,12 @@ Options:
 - **Yes**: Proceed to execute `/export` command automatically
 - **No**: Data remains in memory for later export
 - **Show details**: Display more information about a specific patient
+- **Validate first**: If critical issues found, suggest running /validate before export
 
 If user chooses export, call the export command with generated data.
+
+**If CRITICAL issues were found**:
+- Recommend fixing issues first: "I recommend running /validate and fixing critical issues before export. Export anyway?"
 
 ## Important Considerations
 

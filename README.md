@@ -12,6 +12,8 @@ Cynthia Generator is a Claude Code plugin that creates realistic longitudinal pa
 - **Diagnosis-Driven**: Creates realistic patient histories based on primary/secondary diagnoses
 - **ICD-10 Support**: Accepts both natural language ("Type 2 Diabetes") and ICD-10 codes ("E11.9")
 - **Longitudinal Data**: Generates multi-year patient histories with realistic clinical patterns
+- **Data Validation** *(v0.2.0+)*: Automatic quality checks for clinical realism and referential integrity
+- **Extensible** *(v0.2.0+)*: Add custom medical conditions by editing markdown templates
 - **Multiple Export Options**: JSON, CSV, MySQL, S3, FHIR servers
 - **Secure**: Credentials stored locally only, never committed to version control
 
@@ -49,6 +51,19 @@ Claude will interactively ask you:
 - Demographics (age range, gender, ethnicity)
 - Time span for patient history
 - Whether to export immediately
+
+### Validate Generated Data *(v0.2.0+)*
+
+```bash
+/validate --file ./synthetic-patient-001.json
+```
+
+Check your generated data for:
+- **Clinical realism** (appropriate lab values, medications, disease progression)
+- **Referential integrity** (all resource references are valid)
+- **FHIR compliance** (required fields, proper code systems)
+
+Auto-validation runs after `/generate` by default.
 
 ### Export Data
 
@@ -90,6 +105,11 @@ Create `.claude/cynthia-generator.local.md` to store credentials and preferences
 - Default Patients: 1
 - Default Time Span: 1 year
 - Default Export Format: JSON
+
+## Validation Settings
+- Auto-validate after generate: yes
+- Default severity level: all
+- Strict mode: no
 ```
 
 **Important**: This file is gitignored and stays local to your machine.
@@ -106,6 +126,55 @@ Create `.claude/cynthia-generator.local.md` to store credentials and preferences
 - **Immunization** (vaccinations)
 - **DiagnosticReport** (lab reports, imaging)
 - **CarePlan** (treatment plans)
+
+## Adding Custom Medical Conditions *(v0.2.0+)*
+
+Extend the plugin with your own medical conditions by editing markdown templates.
+
+### Quick Process
+
+1. **Add ICD-10 Mapping**: Edit `skills/fhir-healthcare-data/references/icd10-mappings.md`
+   ```markdown
+   | Your Condition | X00.0 | Brief description |
+   ```
+
+2. **Add Clinical Pattern**: Edit `skills/fhir-healthcare-data/references/clinical-patterns.md`
+   - Define initial presentation with symptoms and tests
+   - Specify medications and dosages
+   - Create follow-up patterns
+   - Include progression scenarios
+
+3. **Test Generation**:
+   ```bash
+   /generate --diagnosis "Your Condition"
+   ```
+
+4. **Validate Output**:
+   ```bash
+   /validate --file ./generated-patient.json
+   ```
+
+### Detailed Template Guide
+
+See `skills/fhir-healthcare-data/references/condition-template.md` for:
+- **Complete template structure** for clinical patterns
+- **Worked example**: Essential Tremor (G25.0) with full implementation
+- **Common patterns by specialty**: Cardiology, Endocrine, Respiratory, Renal, Musculoskeletal
+- **Lab ranges and medication dosing** references
+- **Validation tips** for custom conditions
+
+### Pre-Defined Conditions
+
+The plugin includes clinical patterns for:
+- Type 2 Diabetes (E11.9)
+- Hypertension (I10)
+- COPD (J44.9)
+- Coronary Artery Disease (I25.10)
+- Chronic Kidney Disease Stage 3 (N18.3)
+- Congestive Heart Failure (I50.9)
+- Asthma (J45.909)
+
+Plus 60+ ICD-10 mappings across 10 categories.
 
 ## Example Use Cases
 

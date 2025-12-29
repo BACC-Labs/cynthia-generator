@@ -1,6 +1,6 @@
 {
   "name": "cynthia-generator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generate synthetic FHIR-compliant healthcare data for EHR testing without exposing real patient information",
   "author": {
     "name": "Bacclabs",
@@ -10,5 +10,5 @@
   "homepage": "https://github.com/bacclabs/cynthia-generator",
   "repository": "https://github.com/bacclabs/cynthia-generator",
   "license": "MIT",
-  "keywords": ["healthcare", "fhir", "synthetic-data", "ehr", "testing", "hipaa"]
+  "keywords": ["healthcare", "fhir", "synthetic-data", "ehr", "testing", "hipaa", "validation", "clinical-realism"]
 }
