@@ -1,0 +1,5 @@
+patient_id,encounter_id,type,status,start_date,end_date
+patient-syn-001,encounter-001,Initial Diabetes Diagnosis Visit,finished,2024-01-15T14:00:00Z,2024-01-15T14:45:00Z
+patient-syn-001,encounter-002,Diabetes Follow-up Visit,finished,2024-04-15T10:00:00Z,2024-04-15T10:30:00Z
+patient-syn-001,encounter-003,Diabetes Follow-up Visit,finished,2024-07-15T10:00:00Z,2024-07-15T10:30:00Z
+patient-syn-001,encounter-004,Diabetes Follow-up Visit,finished,2024-10-15T10:00:00Z,2024-10-15T10:30:00Z

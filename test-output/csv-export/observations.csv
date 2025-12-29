@@ -1,0 +1,7 @@
+patient_id,encounter_id,observation_id,loinc_code,display,value,unit,date,interpretation
+patient-syn-001,encounter-001,obs-a1c-001,4548-4,Hemoglobin A1C,7.8,%,2024-01-15T08:30:00Z,High
+patient-syn-001,encounter-001,obs-glucose-001,2339-0,Fasting Glucose,158,mg/dL,2024-01-15T08:30:00Z,High
+patient-syn-001,encounter-001,obs-bp-001,85354-9,Blood Pressure,138/86,mmHg,2024-01-15T14:05:00Z,
+patient-syn-001,encounter-002,obs-a1c-002,4548-4,Hemoglobin A1C,7.2,%,2024-04-15T08:30:00Z,
+patient-syn-001,encounter-003,obs-a1c-003,4548-4,Hemoglobin A1C,6.9,%,2024-07-15T08:30:00Z,
+patient-syn-001,encounter-004,obs-a1c-004,4548-4,Hemoglobin A1C,6.7,%,2024-10-15T08:30:00Z,

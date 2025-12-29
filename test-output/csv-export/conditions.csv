@@ -1,0 +1,2 @@
+patient_id,condition_id,icd10_code,display,onset_date,clinical_status,verification_status
+patient-syn-001,condition-diabetes-001,E11.9,Type 2 diabetes mellitus without complications,2024-01-15,active,confirmed

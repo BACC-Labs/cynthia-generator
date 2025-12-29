@@ -1,0 +1,2 @@
+patient_id,medication_id,rxnorm_code,display,dosage,status,start_date
+patient-syn-001,med-metformin-001,860975,Metformin 500 MG Oral Tablet,500 mg orally twice daily,active,2024-01-15

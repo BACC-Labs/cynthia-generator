@@ -1,0 +1,2 @@
+id,mrn,ssn,given_name,family_name,gender,birth_date,city,state,zip,phone,email
+patient-syn-001,MRN782345,456-78-9012,Maria Elena,Rodriguez,female,1964-03-22,Miami,FL,33101,305-555-8823,maria.rodriguez@example.com
