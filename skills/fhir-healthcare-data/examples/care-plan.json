@@ -1,0 +1,252 @@
+{
+  "resourceType": "CarePlan",
+  "id": "careplan-diabetes-001",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2023-06-10T16:00:00Z"
+  },
+  "status": "active",
+  "intent": "plan",
+  "category": [
+    {
+      "coding": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "698360004",
+          "display": "Diabetes self management plan"
+        }
+      ],
+      "text": "Diabetes Management"
+    }
+  ],
+  "title": "Type 2 Diabetes Management Plan",
+  "description": "Comprehensive care plan for newly diagnosed Type 2 Diabetes mellitus including medication management, lifestyle modifications, and monitoring schedule",
+  "subject": {
+    "reference": "Patient/patient-example-001",
+    "display": "John Michael Smith"
+  },
+  "encounter": {
+    "reference": "Encounter/encounter-diabetes-initial-001"
+  },
+  "period": {
+    "start": "2023-06-10"
+  },
+  "created": "2023-06-10T16:00:00Z",
+  "author": {
+    "display": "Dr. Sarah Johnson, MD"
+  },
+  "careTeam": [
+    {
+      "reference": "CareTeam/diabetes-care-team-001"
+    }
+  ],
+  "addresses": [
+    {
+      "reference": "Condition/condition-diabetes-001",
+      "display": "Type 2 Diabetes Mellitus"
+    }
+  ],
+  "goal": [
+    {
+      "reference": "Goal/goal-a1c-target-001",
+      "display": "Achieve A1C <7.0%"
+    },
+    {
+      "reference": "Goal/goal-weight-loss-001",
+      "display": "Lose 10 pounds over 6 months"
+    },
+    {
+      "reference": "Goal/goal-bp-control-001",
+      "display": "Maintain BP <130/80 mmHg"
+    }
+  ],
+  "activity": [
+    {
+      "outcomeReference": [
+        {
+          "reference": "Observation/observation-a1c-001"
+        }
+      ],
+      "detail": {
+        "kind": "MedicationRequest",
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "860975",
+              "display": "Metformin 500 MG Oral Tablet"
+            }
+          ],
+          "text": "Metformin 500mg twice daily"
+        },
+        "status": "in-progress",
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "description": "Take Metformin 500mg with breakfast and dinner. May increase to 1000mg BID if tolerated and needed for glucose control.",
+        "performer": [
+          {
+            "display": "Patient (self-administered)"
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "kind": "ServiceRequest",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "698472009",
+              "display": "Blood glucose monitoring"
+            }
+          ],
+          "text": "Self-monitoring of blood glucose"
+        },
+        "status": "in-progress",
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 2,
+            "period": 1,
+            "periodUnit": "d"
+          }
+        },
+        "description": "Check fasting blood glucose each morning and one additional reading at varying times. Record values in log book.",
+        "performer": [
+          {
+            "display": "Patient (self-monitoring)"
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "kind": "Appointment",
+        "code": {
+          "text": "A1C laboratory test"
+        },
+        "status": "scheduled",
+        "scheduledTiming": {
+          "event": ["2023-09-10"],
+          "repeat": {
+            "frequency": 1,
+            "period": 3,
+            "periodUnit": "mo"
+          }
+        },
+        "description": "Hemoglobin A1C test every 3 months to monitor diabetes control",
+        "performer": [
+          {
+            "display": "Boston Medical Center Laboratory"
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "kind": "CommunicationRequest",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "409063005",
+              "display": "Dietary counseling"
+            }
+          ],
+          "text": "Diabetes nutrition education"
+        },
+        "status": "in-progress",
+        "description": "Attend diabetes education class covering carbohydrate counting, portion control, and meal planning. Reduce simple sugars and refined carbohydrates.",
+        "performer": [
+          {
+            "display": "Diabetes Education Center"
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "kind": "ServiceRequest",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "229065009",
+              "display": "Exercise therapy"
+            }
+          ],
+          "text": "Physical activity plan"
+        },
+        "status": "in-progress",
+        "description": "Engage in at least 150 minutes per week of moderate-intensity aerobic activity (brisk walking, swimming, cycling). Start with 30 minutes 5 days per week.",
+        "performer": [
+          {
+            "display": "Patient (self-directed)"
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "kind": "Appointment",
+        "code": {
+          "text": "Diabetes follow-up visit"
+        },
+        "status": "scheduled",
+        "scheduledTiming": {
+          "event": ["2023-09-10"],
+          "repeat": {
+            "frequency": 1,
+            "period": 3,
+            "periodUnit": "mo"
+          }
+        },
+        "description": "Follow-up office visit every 3 months to review glucose control, adjust medications, and monitor for complications",
+        "performer": [
+          {
+            "display": "Dr. Sarah Johnson, MD"
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "kind": "Appointment",
+        "code": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "252779009",
+              "display": "Ophthalmic examination and evaluation"
+            }
+          ],
+          "text": "Dilated eye exam"
+        },
+        "status": "scheduled",
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 12,
+            "periodUnit": "mo"
+          }
+        },
+        "description": "Annual dilated eye examination to screen for diabetic retinopathy",
+        "performer": [
+          {
+            "display": "Ophthalmology Department"
+          }
+        ]
+      }
+    }
+  ],
+  "note": [
+    {
+      "text": "Patient motivated and engaged in self-care. Provided with glucose monitor, test strips, and educational materials. Diabetes education class scheduled for next week. Emphasized importance of medication adherence, dietary changes, and regular monitoring."
+    }
+  ]
+}
