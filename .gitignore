@@ -1,0 +1,28 @@
+# Claude Code local settings (contains credentials)
+.claude/*.local.md
+
+# Node modules (if any scripts added later)
+node_modules/
+
+# Python cache (if any Python scripts added)
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files
+.env
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Generated data (temp files during testing)
+generated-data/
+*.log
