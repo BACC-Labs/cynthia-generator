@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "cynthia-generator",
-      "source": ".",
+      "source": "./",
       "description": "Generate synthetic FHIR-compliant healthcare data for EHR testing without exposing real patient information",
       "author": {
         "name": "Bacclabs",
