@@ -20,7 +20,7 @@ Cynthia Generator is a Claude Code plugin that creates realistic longitudinal pa
 ## Installation
 
 ```bash
-claude plugin install https://github.com/bacclabs/cynthia-generator
+claude plugin install https://github.com/BACC-Labs/cynthia-generator
 ```
 
 Or install from local directory:
@@ -218,8 +218,8 @@ MIT
 ## Links
 
 - **Website**: https://bacclabs.io
-- **GitHub**: https://github.com/bacclabs/cynthia-generator
-- **Issues**: https://github.com/bacclabs/cynthia-generator/issues
+- **GitHub**: https://github.com/BACC-Labs/cynthia-generator
+- **Issues**: https://github.com/BACC-Labs/cynthia-generator/issues
 
 ---
 

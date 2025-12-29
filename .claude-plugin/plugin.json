@@ -7,8 +7,8 @@
     "email": "contact@bacclabs.io",
     "url": "https://bacclabs.io"
   },
-  "homepage": "https://github.com/bacclabs/cynthia-generator",
-  "repository": "https://github.com/bacclabs/cynthia-generator",
+  "homepage": "https://github.com/BACC-Labs/cynthia-generator",
+  "repository": "https://github.com/BACC-Labs/cynthia-generator",
   "license": "MIT",
   "keywords": ["healthcare", "fhir", "synthetic-data", "ehr", "testing", "hipaa", "validation", "clinical-realism"]
 }
