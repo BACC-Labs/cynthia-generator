@@ -1,5 +1,7 @@
 # Cynthia Generator
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Generate synthetic FHIR-compliant healthcare data for EHR testing without exposing real patient information.
 
 ## Overview
