@@ -187,7 +187,64 @@ Sample patient: John Smith (MRN: MRN789012)
   - Medications: Metformin 1000mg BID
 ```
 
-### Step 6: Auto-Validate Generated Data (NEW in v0.2.0)
+### Step 6: API Mode — Push Records to bacclabs.io
+
+When `--mode api` is active, push each generated FHIR bundle to the Cynthia API instead of (or in addition to) local storage:
+
+1. **Resolve API credentials**:
+   - Read `CYNTHIA_API_KEY` from the environment.
+   - If not found in environment, check `.claude/cynthia-generator.local.md` for a line like `- API Key: <value>`.
+   - If still not found: print the following and fall back to local save (no crash):
+     ```
+     ⚠️  CYNTHIA_API_KEY not set.
+     To enable API mode, set your key:
+       export CYNTHIA_API_KEY=your_key_here
+     Or add it to .claude/cynthia-generator.local.md:
+       ## Cynthia API
+       - API Key: your_key_here
+     Falling back to local save.
+     ```
+
+2. **Extract ICD-10 code** from each generated FHIR bundle:
+   - Navigate to the first `Condition` resource in the bundle's `entry` array.
+   - Extract `code.coding[0].code` as the ICD-10 value.
+
+3. **POST to the Cynthia API** for each bundle:
+   ```bash
+   curl -s -o /tmp/cynthia_resp.json -w "%{http_code}" \
+     -X POST "${CYNTHIA_API_URL:-https://app.bacclabs.io}/api/v1/client/admissions/" \
+     -H "Authorization: Api-Key $CYNTHIA_API_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"icd_code": "<extracted_icd10_code>"}'
+   ```
+
+4. **Handle the response by HTTP status code**:
+
+   - **201 Created**: Display success message:
+     ```
+     ✅ Record pushed — admission #A{id}
+     🔗 {dashboard_url}
+     ```
+     (`id` and `dashboard_url` come from the JSON response body.)
+
+   - **400 with `admission_limit` in response body**: Display upgrade message and do NOT retry:
+     ```
+     ⚠️  Admission limit reached.
+     Upgrade your plan to push more records:
+     🔗 https://app.bacclabs.io/billing
+     ```
+
+   - **401 Unauthorized**: Display:
+     ```
+     ✗ Invalid API key. Check CYNTHIA_API_KEY and try again.
+     ```
+
+   - **Timeout or network error** (curl exit code non-zero): Fall back to local save and print:
+     ```
+     ⚠️  Network error — could not reach Cynthia API. Record saved locally.
+     ```
+
+### Step 7: Auto-Validate Generated Data (NEW in v0.2.0)
 
 Before offering export, automatically validate the generated data for quality:
 

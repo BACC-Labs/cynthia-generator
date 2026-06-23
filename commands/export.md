@@ -40,7 +40,7 @@ Provide parameters upfront:
 ```
 
 **Available Arguments**:
-- `--destination json|csv|mysql|s3|fhir`: Export destination
+- `--destination json|csv|mysql|s3|fhir|api`: Export destination
 - `--output PATH`: Output file path (for json/csv)
 - `--format bundle|ndjson|flat`: Format for JSON export
 - `--host HOST`: Database/FHIR server host (for mysql/fhir)
@@ -70,6 +70,7 @@ If arguments not provided, use AskUserQuestion to gather:
    - **MySQL database**: Direct MySQL database insertion
    - **S3 bucket**: AWS S3 cloud storage
    - **FHIR server**: POST to FHIR R4 server endpoint
+   - **API (bacclabs.io)**: POST an existing local FHIR JSON file to the Cynthia API
 
 2. **Format** (for JSON/file exports):
    - **Bundle**: Single FHIR Bundle with all resources (recommended for FHIR servers)
@@ -772,6 +773,67 @@ EOF
   - Medications: 40
   - Procedures: 30
 ✓ Export complete
+```
+
+---
+
+---
+
+## API (bacclabs.io) Export
+
+When `--destination api` is specified, POST an existing local FHIR JSON file to the Cynthia API.
+
+### Parameters to Gather:
+- **Input file**: Path to a local FHIR bundle JSON file (required — ask if not provided)
+
+### Credential Resolution:
+1. Read `CYNTHIA_API_KEY` from the environment.
+2. If not found in environment, check `.claude/cynthia-generator.local.md` for a line like `- API Key: <value>`.
+3. If still not found: print setup instructions (same as `--mode api` in generate) and abort.
+
+### Instructions:
+
+1. **Read the FHIR bundle** from the specified local file.
+
+2. **For each `Condition` resource** in the bundle's `entry` array, extract `code.coding[0].code` as the ICD-10 value. Use the first Condition found.
+
+3. **POST to the Cynthia API**:
+   ```bash
+   curl -s -o /tmp/cynthia_resp.json -w "%{http_code}" \
+     -X POST "${CYNTHIA_API_URL:-https://app.bacclabs.io}/api/v1/client/admissions/" \
+     -H "Authorization: Api-Key $CYNTHIA_API_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"icd_code": "<extracted_icd10_code>"}'
+   ```
+
+4. **Handle response by HTTP status code** (same rules as `--mode api` in generate):
+
+   - **201 Created**:
+     ```
+     ✅ Record pushed — admission #A{id}
+     🔗 {dashboard_url}
+     ```
+
+   - **400 with `admission_limit`**: Display upgrade message, do not retry:
+     ```
+     ⚠️  Admission limit reached.
+     Upgrade your plan: 🔗 https://app.bacclabs.io/billing
+     ```
+
+   - **401 Unauthorized**:
+     ```
+     ✗ Invalid API key. Check CYNTHIA_API_KEY and try again.
+     ```
+
+   - **Timeout or network error**: Print warning and do not crash:
+     ```
+     ⚠️  Network error — could not reach Cynthia API.
+     ```
+
+### Example Output:
+```
+✅ Record pushed — admission #A42
+🔗 https://app.bacclabs.io/dashboard/acme/admissions/42
 ```
 
 ---
