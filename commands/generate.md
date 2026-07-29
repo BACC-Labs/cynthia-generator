@@ -53,7 +53,7 @@ Provide parameters upfront:
 - `--gender male|female|other|mixed`: Gender distribution
 - `--ethnicity "VALUE"`: Ethnicity (optional)
 - `--timespan Ny`: Years of patient history (e.g., "3y" for 3 years)
-- `--mode local|api`: Generation mode (default: local, API integration future)
+- `--mode local|api`: Generation mode (default: local). In `api` mode, each generated FHIR bundle is POSTed to the Cynthia API at bacclabs.io using `CYNTHIA_API_KEY`.
 
 ## Instructions for Claude
 
@@ -86,8 +86,8 @@ If arguments not provided, use AskUserQuestion to interactively gather:
    - Default: 1 year
 
 6. **Generation mode**:
-   - Currently only "local" is available
-   - Future: API mode will integrate with bacclabs.io
+   - `local` (default): generate and store data locally
+   - `api`: generate locally, then push each bundle to the Cynthia API (see Step 6)
 
 ### Step 2: Load FHIR Healthcare Data Skill
 
@@ -413,11 +413,8 @@ Handle these scenarios gracefully:
 
 ## Future Enhancements
 
-When API mode is available:
-- `--mode api` will delegate generation to bacclabs.io API
-- Faster generation for large patient counts
-- Access to more sophisticated pattern generation
-- Consistent with bacclabs.io's generation algorithms
+- Faster generation for large patient counts via server-side delegation
+- Access to more sophisticated server-side pattern generation
 
 ---
 
